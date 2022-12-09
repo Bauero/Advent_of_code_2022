@@ -7,4 +7,5 @@ wysokosc = 1
 for i in f:
     wysokosc+=1
 f.close()
-print(szerokosc,wysokosc)
+
+#rozwiązanie 1 - brute force
