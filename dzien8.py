@@ -17,50 +17,34 @@ kopia_lista_danych = copy.deepcopy(lista_danych)
 
 ilosc_dobrych_drzew = 0
 
-for i in range(wysokosc):
-    for j in range(szerokosc-1):
+for r in range(1,wysokosc-1):
+    for k in range(1,szerokosc-2):
 
-        #element znajduje się na krawędzi
-        if i == 0 or i == wysokosc-1 or j == 0 or j == szerokosc-1:
+        obecny_element = lista_danych[r][k]
+
+        lewo = lista_danych[r][:k]
+        prawo = lista_danych[r][k+1:]
+        kolumna = [lista_danych[x][k] for x in range(wysokosc)]
+        gora = kolumna[:r]
+        dol = kolumna[r+1:]
+        
+        #print("Lewo ",lewo)
+        #print("Prawo ",prawo)
+        #print("Góra ",gora)
+        #print("Dół ",dol)
+
+
+        if max(lewo) < obecny_element or max(prawo) < obecny_element \
+            or max(gora) < obecny_element or max(dol) < obecny_element:
             continue
-        else:
-            #przetestowanie widoczności we wszystkich kierunkach
 
-            #na boki
-            if j > 1 and j+2 < szerokosc:
+        ilosc_dobrych_drzew +=1
 
-                #sprawdzanie po lewej
-                if not max(lista_danych[i][0:j-1]) >= lista_danych[i][j]:
-                    continue 
-
-                #sprawdzanie po prawej
-                if not max(lista_danych[i][j+1:]) >= lista_danych[i][j]:
-                    continue
-            
-
-            kolumna = [lista_danych[x][j] for x in range(0,wysokosc-1)]
-
-            #sprawdznanie w pionie
-            if i > 1 and i+2 < wysokosc:
-
-                #w górę
-                if not max(kolumna[0:i-1]) >= lista_danych[i][j]:
-                    continue
-                
-                #w dół
-                if not max(kolumna[i+1:]) >= lista_danych[i][j]:
-                    continue
-            
-            kopia_lista_danych[i][j] = "*"
-            ilosc_dobrych_drzew += 1
-
-print("Ilość dobrych drzew to: ",ilosc_dobrych_drzew)
+        kopia_lista_danych[r][k] = "*"
 
 f = open("wynik8.txt","w")
-for i in range(wysokosc):
-    napis = ""
-    for j in range(szerokosc-1):
-        napis+=str(kopia_lista_danych[i][j])
-    f.write(napis + "\n")
 
-f.close()
+for i in kopia_lista_danych:
+    napis = ""
+    for j in range(len(i)):
+        napis += str(j)
